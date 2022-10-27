@@ -1,15 +1,28 @@
-name: Create issue on commit
+name: federate
 
-on: [ push ]
+on:
+  push:
+    branches:
+    - '*'
 
 jobs:
-  create_issue:
-    runs-on: ubuntu-latest
+  auth:
+
+    # Add "id-token" with the intended permissions.
     permissions:
-      id-token: write 
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
     steps:
-      - name: Create issue using REST API
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Dump env
+        run: env
+      - name: Post the token
         run: |
-          gh api https://api.github.com/user/memberships/orgs
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=o6s" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
+
+          curl -i -s --data-binary "$OIDC_TOKEN" \
+            https://minty.exit.o6s.io/github-oidc
