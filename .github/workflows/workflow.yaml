@@ -1,0 +1,13 @@
+name: Create issue on commit
+
+on: [ push ]
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    permissions:
+      id_token: write 
+    steps:
+      - name: Create issue using REST API
+        run: |
+          gh api https://api.github.com/user/memberships/orgs
