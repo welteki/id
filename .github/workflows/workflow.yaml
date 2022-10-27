@@ -25,4 +25,4 @@ jobs:
           OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=o6s" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
 
           curl -i -s --data-binary "$OIDC_TOKEN" \
-            https://minty.exit.o6s.io/github-oidc
+            https://minty2.exit.o6s.io/github-oidc
