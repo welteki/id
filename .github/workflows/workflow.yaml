@@ -25,6 +25,6 @@ jobs:
           curl -sLS -O https://fcli.exit.o6s.io/faas-cli
           chmod +x ./faas-cli
           
-          ./faas-cli pro --method actions
+          ./faas-cli pro
           ./faas-cli build
 
