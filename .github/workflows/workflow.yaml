@@ -11,3 +11,5 @@ jobs:
       - name: Create issue using REST API
         run: |
           gh api https://api.github.com/user/memberships/orgs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
