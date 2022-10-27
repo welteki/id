@@ -20,9 +20,11 @@ jobs:
           fetch-depth: 1
       - name: Dump env
         run: env
-      - name: Post the token
+      - name: Get CLI
         run: |
-          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=o6s" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
+          curl -sLS -O https://fcli.exit.o6s.io/faas-cli
+          chmod +x ./faas-cli
+          
+          ./faas-cli pro --method actions
+          ./faas-cli build
 
-          curl -i -s --data-binary "$OIDC_TOKEN" \
-            https://minty2.exit.o6s.io/github-oidc
